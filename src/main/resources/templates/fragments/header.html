@@ -1,0 +1,182 @@
+
+<!-- Header -->
+<!--<header class="header bg-danger" th:fragment="header">
+    <div class="container">
+
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Liên kết với ứng dụng Tphone
+                    </a>
+
+                </li>
+                <li class="nav-item d-flex align-items-center">
+                    <span class="nav-link text-white">Kết nối</span>
+                    <a href="" class="nav-link text-white">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="" class="nav-link text-white">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a href="" class="nav-link text-white">
+                        <i class="fa-solid fa-bell"></i> Thông báo
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link text-white">
+                        <i class="fa-solid fa-circle-question"></i> Trợ giúp
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/register" class="nav-link text-white fw-bold">
+                        Đăng kí
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/login" class="nav-link text-white fw-bold">
+                        Đăng nhập
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        &lt;!&ndash; Header with search &ndash;&gt;
+        <div class="d-flex align-items-center mt-3">
+            <div class="me-3">
+                <img src="fe/img/T-Phone.png" alt="Logo" class="img-fluid" style="max-height: 50px;">
+            </div>
+
+            &lt;!&ndash; Thanh tìm kiếm &ndash;&gt;
+            <form class="d-flex flex-grow-1 mx-3">
+                <input class="form-control me-2 w-100" type="search" placeholder="Bạn cần tìm gì?" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+
+            <div>
+                <a href="" class="text-white">
+                    <i class="fa-solid fa-cart-shopping fa-2x"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</header>-->
+
+<!-- Header -->
+<header class="bg-danger py-2" th:fragment="header">
+    <div class="container-fluid">
+        <div class="row align-items-center" style="justify-content: center">
+            <!-- Logo -->
+            <div class="col-md-4" style="max-width: fit-content">
+                <a href="/" class="navbar-brand" style="margin-right: 10px">
+                    <img src="/fe/img/Avatar-store.png" alt="Logo" class="img-fluid">
+                </a>
+                <a href="/user/" class="text-white me-3">
+                    <i class="fa-solid fa-circle-question"></i> Trợ giúp
+                </a>
+                <a href="#" class="text-white me-3">
+                    <i class="fa-solid fa-bell"></i> Thông báo
+                </a>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="col-md-4">
+                <form class="d-flex" action="/products" method="get">
+                    <input class="form-control me-2" type="text" placeholder="Bạn cần tìm gì?"
+                           aria-label="Search" name="keyword" th:value="${keyword}" required>
+                    <button class="btn btn-outline-light" type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- User Menu -->
+            <div class="col-md-4 d-flex justify-content-end align-items-center" style="max-width: 500px">
+                    <!-- Order Tracking -->
+                    <a href="#" class="text-white me-3 d-flex align-items-center">
+                        <i class="fa-solid fa-truck me-2"></i> Tra cứu đơn hàng
+                    </a>
+
+                    <!-- Cart -->
+                    <th:block th:if="${user==null}">
+                        <a href="/user/carts" class="text-white me-3 d-flex align-items-center">
+                            <i class="fa-solid fa-cart-shopping me-2"></i> Giỏ hàng (0)
+                        </a>
+                    </th:block>
+
+                    <th:block th:if="${user!=null}">
+                        <a href="/user/carts" class="text-white me-3 d-flex align-items-center">
+                            <i class="fa-solid fa-cart-shopping me-2"></i> Giỏ hàng ([[${countCart}]])
+                        </a>
+                    </th:block>
+
+                    <!-- Nếu người dùng chưa đăng nhập -->
+                    <div>
+                        <th:block th:if="${user==null}">
+                            <a href="/login" class="text-white">Đăng nhập</a>
+                        </th:block>
+                    </div>
+
+                    <!-- Nếu người dùng đã đăng nhập -->
+                    <div class="d-flex align-items-center">
+                        <th:block th:unless="${user==null}">
+                            <a class="text-white me-3 nav-link dropdown-toggle active" href="#" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user"></i> <span th:text="${user.name}"></span>
+                            </a>
+                            <!-- Dropdown menu with profile, orders, and logout options -->
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="/user/profile">Thông tin cá nhân</a></li>
+                                <li><a class="dropdown-item" href="/user/my-orders">Đơn hàng của bạn</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                            </ul>
+                        </th:block>
+                    </div>
+
+                <!-- Xu ly ngon ngu -->
+                <!--<div>
+                    <select id="language-selector" onchange="changeLanguage()">
+                        <option value="en">English</option>
+                        <option value="vi">Tiếng Việt</option>
+                    </select>
+                </div>
+                &lt;!&ndash; Su dung fetch de gọi Api &ndash;&gt;
+                <script>
+                    function changeLanguage() {
+                        const language = document.getElementById("language-selector").value;
+
+                        // Gọi API để lấy nội dung theo ngôn ngữ đã chọn
+                        fetch(`/api/language/translate?key=greeting&lang=${language}`)
+                            .then(response => response.text())
+                            .then(data => {
+                                // Cập nhật nội dung trên giao diện
+                                document.getElementById("greeting").innerText = data;
+                            })
+                            .catch(error => console.error("Error:", error));
+                    }
+
+                    // Gọi API để khởi tạo ngôn ngữ mặc định (nếu cần)
+                    document.addEventListener("DOMContentLoaded", function () {
+                        changeLanguage();
+                    });
+                </script>
+
+                <div>
+                    <h1 id="greeting">Loading...</h1>
+                </div>-->
+
+            </div>
+        </div>
+    </div>
+</header>
+
+
